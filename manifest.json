@@ -3,7 +3,7 @@
   "name": "Dataview Publisher",
   "version": "0.1.1",
   "minAppVersion": "1.6.3",
-  "description": "Serialize Dataview query for Obsidian Publish",
+  "description": "Output markdown from your Dataview queries and keep them up to date. You can also be able to publish them.",
   "author": "UD",
   "authorUrl": "https://notes.udus.dev",
   "fundingUrl": "https://www.buymeacoffee.com/udus",

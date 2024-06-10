@@ -1,7 +1,7 @@
 {
   "name": "dataview-publisher",
   "version": "0.1.1",
-  "description": "Serialize Dataview query for Obsidian Publish",
+  "description": "Output markdown from your Dataview queries and keep them up to date. You can also be able to publish them.",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
