@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.1.0](https://github.com/udus122/dataview-publisher/compare/0.0.3...0.1.0) - 2024-06-10
+- update-settings-and-docs by @udus122 in https://github.com/udus122/dataview-publisher/pull/5
+
 ## [0.0.3](https://github.com/udus122/dataview-publisher/compare/0.0.2...0.0.3) - 2024-06-10
 - Feature/insert-template-command by @udus122 in https://github.com/udus122/dataview-publisher/pull/3
 
