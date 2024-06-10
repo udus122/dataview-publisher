@@ -48,7 +48,7 @@ export class SettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName("Update on save")
       .setDesc(
-        "Automatically update dataview publisher block when saving a file. (Target file is the active file only)"
+        "Automatically update dataview publisher block when saving a file. (target file is the active file only)"
       )
       .addToggle((tc) => {
         tc.setValue(this.plugin.settings.updateOnSave).onChange(
