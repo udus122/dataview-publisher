@@ -8,7 +8,12 @@
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
     "version": "node version-bump.mjs && git add manifest.json versions.json"
   },
-  "keywords": ["obsidian", "obsidian-plugin", "obsidian-dataview", "obsidian-publish"],
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "obsidian-dataview",
+    "obsidian-publish"
+  ],
   "author": "UD",
   "license": "MIT",
   "devDependencies": {

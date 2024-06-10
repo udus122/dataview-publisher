@@ -1,6 +1,6 @@
-import { extractBlock, parseBlock, updateFile } from "./operations";
+import { extractBlock, parseBlock } from "./dataview-publisher";
 
-jest.mock("./dataview");
+// jest.mock("./dataview");
 
 const TEST_TEXT = `
 Necessitatibus quisquam veritatis eos dolor hic totam sapiente necessitatibus est. Eaque maxime nisi velit fugiat sint. Non natus nam illo. Dolorum earum esse quod vitae autem.
@@ -46,9 +46,7 @@ describe("operations", () => {
       content: TEST_BLOCK,
       code: "LIST\nFROM #🏷️/dataview-publish",
       language: "dataview",
-      serialized: `
-DATAVIEWの結果をシリアライズした結果であり、置換対象
-`,
+      serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
     });
   });
 
@@ -90,9 +88,7 @@ DATAVIEWの結果をシリアライズした結果であり、置換対象
 %% DATAVIEW_PUBLISH: end %%`,
         language: "dataview",
         code: "LIST\nFROM #🏷️/dataview-publish",
-        serialized: `
-DATAVIEWの結果をシリアライズした結果であり、置換対象
-`,
+        serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
       },
       {
         content: `%% DATAVIEW_PUBLISH: start
@@ -105,48 +101,8 @@ DATAVIEWの結果をシリアライズした結果であり、置換対象
 %% DATAVIEW_PUBLISH: end %%`,
         language: "dataview",
         code: "LIST\nFROM #🏷️/index",
-        serialized: `
-DATAVIEWの結果をシリアライズした結果であり、置換対象
-`,
+        serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
       },
     ]);
-  });
-});
-
-describe("updateFile", () => {
-  it("updateFile", async () => {
-    const file = `
-Necessitatibus quisquam veritatis eos dolor hic totam sapiente necessitatibus est. Eaque maxime nisi velit fugiat sint. Non natus nam illo. Dolorum earum esse quod vitae autem.
-
-%% DATAVIEW_PUBLISH: start
-\`\`\`dataview
-LIST
-FROM #🏷️/dataview-publish
-\`\`\`
-%%
-DATAVIEWの結果をシリアライズした結果であり、置換対象
-%% DATAVIEW_PUBLISH: end %%
-
-Necessitatibus quisquam veritatis eos dolor hic totam sapiente necessitatibus est. Eaque maxime nisi velit fugiat sint. Non natus nam illo. Dolorum earum esse quod vitae autem.
-`;
-
-    const updatedContent = await updateFile(file);
-
-    const expectedContent = `
-Necessitatibus quisquam veritatis eos dolor hic totam sapiente necessitatibus est. Eaque maxime nisi velit fugiat sint. Non natus nam illo. Dolorum earum esse quod vitae autem.
-
-%% DATAVIEW_PUBLISH: start
-\`\`\`dataview
-LIST
-FROM #🏷️/dataview-publish
-\`\`\`
-%%
-Updated result
-%% DATAVIEW_PUBLISH: end %%
-
-Necessitatibus quisquam veritatis eos dolor hic totam sapiente necessitatibus est. Eaque maxime nisi velit fugiat sint. Non natus nam illo. Dolorum earum esse quod vitae autem.
-`;
-
-    expect(updatedContent).toEqual(expectedContent);
   });
 });

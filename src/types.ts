@@ -7,3 +7,15 @@ export type UnsafeApp = App & {
     removeCommand(id: string): void;
   };
 };
+
+export type BlockInfo = {
+  content: string;
+  language: string;
+  code: string;
+  serialized: string;
+};
+
+export type Replacer = {
+  searchValue: string;
+  replaceValue: string;
+};

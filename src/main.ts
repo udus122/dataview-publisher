@@ -1,11 +1,11 @@
-import { Notice, Plugin } from "obsidian";
+import { Plugin } from "obsidian";
 
 import { DEFAULT_SETTINGS, SettingTab, Settings } from "./settings";
-import { updateFile } from "./operations";
+
 import { createCommands } from "./commands";
 
 import type { UnsafeApp } from "./types";
-import { getFilePaths } from "./dataview";
+import { Operator } from "./operations";
 
 export default class Main extends Plugin {
   settings: Settings;
@@ -32,27 +32,16 @@ export default class Main extends Plugin {
     if (typeof saveCommandDefinition.callback === "function") {
       saveCommandDefinition.callback = () => {
         if (this.settings.serializeOnSave) {
-          const currentFile = app.workspace.getActiveFile();
+          const operator = new Operator(app);
 
-          if (!currentFile) {
-            new Notice("No active file");
-            throw new Error("getActiveFile() returned null");
-          }
+          const currentFile = operator.getActiveFile();
 
-          const targetPaths = getFilePaths(`"${currentFile.path}"`);
+          const targetTfiles = operator.retrieveTfilesFromSource(
+            `"${currentFile.path}"`
+          );
 
-          targetPaths.forEach(async (path) => {
-            const tf = this.app.vault.getFileByPath(path);
-
-            if (!tf) {
-              new Notice("File not found");
-              throw new Error("getFileByPath() returned null");
-            }
-
-            const content = await this.app.vault.read(tf);
-            const updated = await updateFile(content);
-
-            this.app.vault.modify(tf, updated);
+          targetTfiles.forEach(async (tfile) => {
+            await operator.updateDataviewPublisherOutput(tfile);
           });
         }
       };
