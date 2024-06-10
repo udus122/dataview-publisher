@@ -49,8 +49,8 @@ export async function executeBlock(block: BlockInfo): Promise<string> {
   }
   // languageが指定されていない場合は、DQLとして実行する
   const result = await executeQueryMarkdown(block.code);
-  // 体裁を整えるために前後に改行を追加して返す
-  return result;
+
+  return result.trim();
 }
 
 export function extractBlock(content: string): Array<string> {
