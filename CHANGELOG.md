@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.2.1](https://github.com/udus122/dataview-publisher/compare/0.2.0...0.2.1) - 2024-06-10
+- Fixed an issue where the default save behavior would not work. by @udus122 in https://github.com/udus122/dataview-publisher/pull/13
+
 ## [0.2.0](https://github.com/udus122/dataview-publisher/compare/0.1.4...0.2.0) - 2024-06-10
 - Remove ribbon icon by @udus122 in https://github.com/udus122/dataview-publisher/pull/11
 
