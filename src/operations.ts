@@ -61,7 +61,7 @@ export class Operator {
   }
 
   private async updateDataviewPublisherOutput(tfile: TFile) {
-    const content = await this.app.vault.read(tfile);
+    const content = await this.app.vault.cachedRead(tfile);
     const replacer = await createReplacerFromContent(content);
 
     const updatedContent = replacer.reduce(
@@ -77,6 +77,6 @@ export class Operator {
       content
     );
 
-    this.app.vault.modify(tfile, updatedContent);
+    this.app.vault.process(tfile, () => updatedContent);
   }
 }
