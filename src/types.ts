@@ -11,8 +11,10 @@ export type UnsafeApp = App & {
 export type BlockInfo = {
   content: string;
   language: string;
-  code: string;
+  query: string;
+  startBlock: string;
   serialized: string;
+  endBlock: string;
 };
 
 export type Replacer = {

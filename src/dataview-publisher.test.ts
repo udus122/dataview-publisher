@@ -1,6 +1,8 @@
-import { extractBlock, parseBlock } from "./dataview-publisher";
-
-// jest.mock("./dataview");
+import {
+  composeBlockContent,
+  extractBlock,
+  parseBlock,
+} from "./dataview-publisher";
 
 const TEST_TEXT = `
 Necessitatibus quisquam veritatis eos dolor hic totam sapiente necessitatibus est. Eaque maxime nisi velit fugiat sint. Non natus nam illo. Dolorum earum esse quod vitae autem.
@@ -44,9 +46,16 @@ describe("operations", () => {
     const parsed = parseBlock(TEST_BLOCK);
     expect(parsed).toEqual({
       content: TEST_BLOCK,
-      code: "LIST\nFROM #🏷️/dataview-publish",
+      startBlock: `%% DATAVIEW_PUBLISH: start
+\`\`\`dataview
+LIST
+FROM #🏷️/dataview-publish 
+\`\`\`
+%%`,
+      query: "LIST\nFROM #🏷️/dataview-publish",
       language: "dataview",
       serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
+      endBlock: "%% DATAVIEW_PUBLISH: end %%",
     });
   });
 
@@ -87,8 +96,15 @@ FROM #🏷️/dataview-publish
 DATAVIEWの結果をシリアライズした結果であり、置換対象
 %% DATAVIEW_PUBLISH: end %%`,
         language: "dataview",
-        code: "LIST\nFROM #🏷️/dataview-publish",
+        query: "LIST\nFROM #🏷️/dataview-publish",
         serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
+        startBlock: `%% DATAVIEW_PUBLISH: start
+\`\`\`dataview
+LIST
+FROM #🏷️/dataview-publish 
+\`\`\`
+%%`,
+        endBlock: "%% DATAVIEW_PUBLISH: end %%",
       },
       {
         content: `%% DATAVIEW_PUBLISH: start
@@ -100,9 +116,41 @@ FROM #🏷️/index
 DATAVIEWの結果をシリアライズした結果であり、置換対象
 %% DATAVIEW_PUBLISH: end %%`,
         language: "dataview",
-        code: "LIST\nFROM #🏷️/index",
+        query: "LIST\nFROM #🏷️/index",
         serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
+        startBlock: `%% DATAVIEW_PUBLISH: start
+\`\`\`dataview
+LIST
+FROM #🏷️/index
+\`\`\`
+%%`,
+        endBlock: "%% DATAVIEW_PUBLISH: end %%",
       },
     ]);
+  });
+  it("should return the composed block", () => {
+    const blocks = {
+      content:
+        "%% DATAVIEW_PUBLISH: start\n```dataview\nLIST\nFROM #🏷️/dataview-publish \n```\n%%\nDATAVIEWの結果をシリアライズした結果であり、置換対象\n%% DATAVIEW_PUBLISH: end %%",
+      startBlock:
+        "%% DATAVIEW_PUBLISH: start\n```dataview\nLIST\nFROM #🏷️/dataview-publish \n```\n%%",
+      query: "LIST\nFROM #🏷️/dataview-publish",
+      language: "dataview",
+      serialized: "DATAVIEWの結果をシリアライズした結果であり、置換対象",
+      endBlock: "%% DATAVIEW_PUBLISH: end %%",
+    };
+
+    const composedBlock = composeBlockContent(blocks);
+
+    const expectedBlock = `%% DATAVIEW_PUBLISH: start
+\`\`\`dataview
+LIST
+FROM #🏷️/dataview-publish 
+\`\`\`
+%%
+DATAVIEWの結果をシリアライズした結果であり、置換対象
+%% DATAVIEW_PUBLISH: end %%`;
+
+    expect(composedBlock).toEqual(expectedBlock);
   });
 });

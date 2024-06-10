@@ -1,9 +1,14 @@
 import { executeQueryMarkdown } from "./dataview-utils";
 import { BlockInfo, Replacer } from "./types";
 
-const START_BLOCK_REGEX =
-  /^\s*%%\s*DATAVIEW_PUBLISH:\s*start\s*(?:[\s\S])*%%\s*$/;
-const END_BLOCK_REGEX = /^\s*%%\s*DATAVIEW_PUBLISH:\s*end\s*%%\s*$/;
+const START_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISH:\s*start\s*[\s\S]*?%%\s*/;
+const END_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISH:\s*end\s*%%\s*/;
+const BLOCK_REGEX = new RegExp(
+  START_BLOCK_REGEX.source +
+    /(?<serialized>[\s\S]*?)/.source +
+    END_BLOCK_REGEX.source,
+  "gm"
+);
 
 export async function createReplacerFromContent(
   content: string
@@ -37,7 +42,10 @@ export async function updateBlock(block: BlockInfo): Promise<BlockInfo> {
 
   return {
     ...block,
-    content: block.content.replace(block.serialized, executionResult),
+    content: composeBlockContent({
+      ...block,
+      serialized: executionResult,
+    }),
   };
 }
 
@@ -48,16 +56,15 @@ export async function executeBlock(block: BlockInfo): Promise<string> {
     // return await executeJavaScriptBlock(block);
   }
   // languageが指定されていない場合は、DQLとして実行する
-  const result = await executeQueryMarkdown(block.code);
+  const result = await executeQueryMarkdown(block.query);
 
   return result.trim();
 }
 
 export function extractBlock(content: string): Array<string> {
-  const BLOCK_REGEX =
-    /\s*%%\s*DATAVIEW_PUBLISH:\s*start\s*[\s\S]+?\n\s*%%\s*DATAVIEW_PUBLISH:\s*end\s*%%\s*/gm;
-
-  const blocks = content.match(BLOCK_REGEX) ?? [];
+  // NOTE: initialize regex to reset lastIndex
+  const regex = new RegExp(BLOCK_REGEX);
+  const blocks = content.match(regex) ?? [];
   return blocks.map((block) => block.trim());
 }
 
@@ -68,15 +75,17 @@ export function extractBlocks(file: string) {
 
 export function parseBlock(block: string): BlockInfo {
   const startBlock = extractStartBlock(block);
-  const { language, code } = extractMarkdownCodeBlock(startBlock);
+  const { language, query } = extractMarkdownCodeBlock(startBlock);
 
   const serialized = extractSerialized(block);
 
   return {
     content: block,
+    startBlock,
     language,
-    code,
+    query,
     serialized,
+    endBlock: extractEndBlock(block),
   };
 }
 
@@ -89,7 +98,7 @@ export function extractStartBlock(text: string) {
     throw new Error("start block is not found");
   }
 
-  return match[0];
+  return match[0].trim();
 }
 
 export function extractEndBlock(text: string) {
@@ -100,34 +109,27 @@ export function extractEndBlock(text: string) {
   if (!match) {
     throw new Error("end block is not found");
   }
-  return match[0];
+  return match[0].trim();
 }
 
 export function extractMarkdownCodeBlock(text: string) {
-  const regex = /```(?<language>\S+)?\n(?<code>[\s\S]*?)```/m;
+  const CODEBLOCK_REGEX = /```(?<language>\S+)?\n(?<query>[\s\S]*?)```/m;
 
-  const match = text.match(regex);
+  const match = text.match(CODEBLOCK_REGEX);
 
   if (!match) {
-    throw new Error("code block is not found");
+    throw new Error("query block is not found");
   }
 
   const language = match.groups?.language.trim() ?? "";
-  const code = match.groups?.code.trim() ?? "";
+  const query = match.groups?.query.trim() ?? "";
 
-  return { language, code };
+  return { language, query };
 }
 
 export function extractSerialized(text: string) {
-  const regex = new RegExp(
-    // "%% DATAVIEW_PUBLISH: start"に続く、2番目の"%%"の後ろからキャプチャを開始する
-    /^\s*%%\s*DATAVIEW_PUBLISH:\s*start\s*(?:[\s\S])*%%\s*$/.source +
-      // 任意の複数行文字列をキャプチャ
-      /(?<serialized>[\s\S]*?)/.source +
-      // "%% DATAVIEW_PUBLISH: end"が出現したらキャプチャを終了
-      /%%\s*DATAVIEW_PUBLISH:\s*end\s*%%/.source,
-    "m"
-  );
+  // NOTE: initialize regex to reset lastIndex
+  const regex = new RegExp(BLOCK_REGEX.source);
 
   // 正規表現でマッチング
   const match = text.match(regex);
@@ -137,4 +139,9 @@ export function extractSerialized(text: string) {
   }
   // マッチが見つかった場合は、トリミングして返す
   return match.groups.serialized.trim();
+}
+
+export function composeBlockContent(blocks: BlockInfo): string {
+  const { startBlock, serialized, endBlock } = blocks;
+  return startBlock + "\n" + serialized + "\n" + endBlock;
 }
