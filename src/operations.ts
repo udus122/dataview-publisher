@@ -16,12 +16,6 @@ export class Operator {
   updateActiveFile() {
     const currentFile = this.getActiveFile();
     this.updateDataviewPublisherOutput(currentFile);
-
-    const targetTfiles = this.retrieveTfilesFromSource(`"${currentFile.path}"`);
-
-    targetTfiles.forEach(async (tfile) => {
-      await this.updateDataviewPublisherOutput(tfile);
-    });
   }
 
   updateFromSource(source: string) {
