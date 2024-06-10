@@ -1,11 +1,11 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+  "id": "dataview-publisher",
+  "name": "Dataview Publisher",
+  "version": "0.0.0",
+  "minAppVersion": "1.6.3",
+  "description": "Serialize Dataview query for Obsidian Publish",
+  "author": "UD",
+  "authorUrl": "https://notes.udus.dev",
+  "fundingUrl": "https://www.buymeacoffee.com/udus",
+  "isDesktopOnly": false
 }
