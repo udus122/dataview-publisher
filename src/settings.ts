@@ -3,12 +3,12 @@ import Main from "./main";
 
 export interface Settings {
   source: string;
-  serializeOnSave: boolean;
+  updateOnSave: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
   source: "",
-  serializeOnSave: false,
+  updateOnSave: false,
 };
 
 export class SettingTab extends PluginSettingTab {
@@ -26,27 +26,34 @@ export class SettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Source")
-      .setDesc(
-        "Dataview source to search for target files. ref. https://blacksmithgu.github.io/obsidian-dataview/reference/sources/"
-      )
-      .addText((text) =>
+      .setDesc("Dataview source to search for target files.")
+      .addTextArea((text) =>
         text
-          .setPlaceholder("#dataview-publish")
+          .setPlaceholder("#dataview-publisher")
           .setValue(this.plugin.settings.source)
           .onChange(async (value) => {
             this.plugin.settings.source = value;
             await this.plugin.saveSettings();
           })
       );
+
+    const desc = containerEl.createEl("p", {
+      text: "Dataview source ref: ",
+    });
+    desc.createEl("a", {
+      text: "https://blacksmithgu.github.io/obsidian-dataview/reference/sources",
+      href: "https://blacksmithgu.github.io/obsidian-dataview/reference/sources",
+    });
+
     new Setting(containerEl)
-      .setName("Serialize on save")
+      .setName("Update on save")
       .setDesc(
-        "Automatically serialize dataview when saving a file. (Target file is the active file only)"
+        "Automatically update dataview publisher block when saving a file. (Target file is the active file only)"
       )
       .addToggle((tc) => {
-        tc.setValue(this.plugin.settings.serializeOnSave).onChange(
+        tc.setValue(this.plugin.settings.updateOnSave).onChange(
           async (value) => {
-            this.plugin.settings.serializeOnSave = value;
+            this.plugin.settings.updateOnSave = value;
             await this.plugin.saveSettings();
           }
         );
