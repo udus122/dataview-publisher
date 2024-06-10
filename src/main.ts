@@ -33,7 +33,7 @@ export default class Main extends Plugin {
 
     if (typeof saveCommandDefinition.callback === "function") {
       saveCommandDefinition.callback = () => {
-        if (this.settings.serializeOnSave) {
+        if (this.settings.updateOnSave) {
           const operator = new Operator(app);
           operator.updateActiveFile();
         }
