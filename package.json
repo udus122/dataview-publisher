@@ -1,6 +1,6 @@
 {
   "name": "dataview-publisher",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Serialize Dataview query for Obsidian Publish",
   "main": "main.js",
   "scripts": {
