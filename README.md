@@ -35,9 +35,9 @@ This plugin uses the following two plugins, so you must install them:
 
 ````
 %% DATAVIEW_PUBLISHER: start
-```dataview
+\`\`\`dataview
 <Your favorite Dataview query>
-```
+\`\`\`
 %%
 <Query results will be output as markdown here>
 %% DATAVIEW_PUBLISHER: end %%
