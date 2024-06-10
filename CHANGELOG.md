@@ -1,5 +1,7 @@
 # Changelog
 
+## [0.1.1](https://github.com/udus122/dataview-publisher/compare/0.1.0...0.1.1) - 2024-06-10
+
 ## [0.1.0](https://github.com/udus122/dataview-publisher/compare/0.0.3...0.1.0) - 2024-06-10
 - update-settings-and-docs by @udus122 in https://github.com/udus122/dataview-publisher/pull/5
 
