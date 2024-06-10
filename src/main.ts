@@ -18,11 +18,6 @@ export default class Main extends Plugin {
       this.addCommand(command);
     });
 
-    this.addRibbonIcon("send", "Serialize dataview", () => {
-      const operator = new Operator(app);
-      operator.updateFromSource(this.settings.source);
-    });
-
     // Source for save setting
     // https://github.com/hipstersmoothie/obsidian-plugin-prettier/blob/main/src/main.ts
     // NOTE: To avoid type errors, we need to cast the command definition to the correct type
