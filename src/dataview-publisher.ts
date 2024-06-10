@@ -121,8 +121,8 @@ export function extractMarkdownCodeBlock(text: string) {
     throw new Error("query block is not found");
   }
 
-  const language = match.groups?.language.trim() ?? "";
-  const query = match.groups?.query.trim() ?? "";
+  const language = match.groups?.language?.trim() ?? "";
+  const query = match.groups?.query?.trim() ?? "";
 
   return { language, query };
 }
