@@ -15,12 +15,14 @@ export class Operator {
 
   async updateActiveFile() {
     const editor = this.getEditor();
+    const cursor = editor.getCursor();
     const content = editor.getValue();
 
     const replacer = await createReplacerFromContent(content);
     const updatedContent = this.updateContnet(content, replacer);
 
     editor.setValue(updatedContent);
+    editor.setCursor(cursor);
   }
 
   private getEditor(): Editor {
