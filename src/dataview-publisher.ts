@@ -1,8 +1,8 @@
 import { executeQueryMarkdown } from "./dataview-utils";
 import { BlockInfo, Replacer } from "./types";
 
-const START_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISH:\s*start\s*[\s\S]*?%%\s*/;
-const END_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISH:\s*end\s*%%\s*/;
+const START_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISHER:\s*start\s*[\s\S]*?%%\s*/;
+const END_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISHER:\s*end\s*%%\s*/;
 const BLOCK_REGEX = new RegExp(
   START_BLOCK_REGEX.source +
     /(?<serialized>[\s\S]*?)/.source +
