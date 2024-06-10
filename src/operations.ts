@@ -1,5 +1,5 @@
-import { Notice, type TFile } from "obsidian";
-import { UnsafeApp } from "./types";
+import { Editor, MarkdownView, type TFile } from "obsidian";
+import { Replacer, UnsafeApp } from "./types";
 import { createReplacerFromContent } from "./dataview-publisher";
 import { DataviewApi } from "obsidian-dataview";
 import { getDataviewAPI } from "./dataview-utils";
@@ -13,9 +13,22 @@ export class Operator {
     this.dv = getDataviewAPI(app);
   }
 
-  updateActiveFile() {
-    const currentFile = this.getActiveFile();
-    this.updateDataviewPublisherOutput(currentFile);
+  async updateActiveFile() {
+    const editor = this.getEditor();
+    const content = editor.getValue();
+
+    const replacer = await createReplacerFromContent(content);
+    const updatedContent = this.updateContnet(content, replacer);
+
+    editor.setValue(updatedContent);
+  }
+
+  private getEditor(): Editor {
+    const activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
+    if (!activeLeaf) {
+      throw new Error("No active leaf found");
+    }
+    return activeLeaf.editor;
   }
 
   updateFromSource(source: string) {
@@ -24,17 +37,6 @@ export class Operator {
     targetTfiles.forEach(async (tfile) => {
       await this.updateDataviewPublisherOutput(tfile);
     });
-  }
-
-  private getActiveFile(): TFile {
-    const currentFile = this.app.workspace.getActiveFile();
-
-    if (!currentFile) {
-      new Notice("No active file");
-      throw new Error("getActiveFile() returned null");
-    }
-
-    return currentFile;
   }
 
   private retrievePathsFromSource(source: string): Array<string> {
@@ -56,9 +58,15 @@ export class Operator {
 
   private async updateDataviewPublisherOutput(tfile: TFile) {
     const content = await this.app.vault.cachedRead(tfile);
-    const replacer = await createReplacerFromContent(content);
 
-    const updatedContent = replacer.reduce(
+    const replacer = await createReplacerFromContent(content);
+    const updatedContent = this.updateContnet(content, replacer);
+
+    this.app.vault.process(tfile, () => updatedContent);
+  }
+
+  private updateContnet(content: string, replacer: Replacer[]) {
+    return replacer.reduce(
       (
         c: string,
         {
@@ -70,7 +78,5 @@ export class Operator {
       },
       content
     );
-
-    this.app.vault.process(tfile, () => updatedContent);
   }
 }
