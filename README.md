@@ -43,6 +43,8 @@ This plugin uses the following two plugins, so you must install them:
 %% DATAVIEW_PUBLISHER: end %%
 ````
 
+Tips: To suppress the original rendering, omit "dataview" of info string.
+
 ### Example
 
 Display a list of files tagged with `#articles`
