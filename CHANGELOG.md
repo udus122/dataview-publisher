@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.2.0](https://github.com/udus122/dataview-publisher/compare/0.1.4...0.2.0) - 2024-06-10
+- Remove ribbon icon by @udus122 in https://github.com/udus122/dataview-publisher/pull/11
+
 ## [0.1.4](https://github.com/udus122/dataview-publisher/compare/0.1.3...0.1.4) - 2024-06-10
 
 ## [0.1.3](https://github.com/udus122/dataview-publisher/compare/0.1.2...0.1.3) - 2024-06-10
