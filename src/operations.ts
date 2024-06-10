@@ -13,7 +13,26 @@ export class Operator {
     this.dv = getDataviewAPI(app);
   }
 
-  getActiveFile(): TFile {
+  updateActiveFile() {
+    const currentFile = this.getActiveFile();
+    this.updateDataviewPublisherOutput(currentFile);
+
+    const targetTfiles = this.retrieveTfilesFromSource(`"${currentFile.path}"`);
+
+    targetTfiles.forEach(async (tfile) => {
+      await this.updateDataviewPublisherOutput(tfile);
+    });
+  }
+
+  updateFromSource(source: string) {
+    const targetTfiles = this.retrieveTfilesFromSource(source);
+
+    targetTfiles.forEach(async (tfile) => {
+      await this.updateDataviewPublisherOutput(tfile);
+    });
+  }
+
+  private getActiveFile(): TFile {
     const currentFile = this.app.workspace.getActiveFile();
 
     if (!currentFile) {
@@ -33,7 +52,7 @@ export class Operator {
     return paths;
   }
 
-  retrieveTfilesFromSource(source: string): Array<TFile> {
+  private retrieveTfilesFromSource(source: string): Array<TFile> {
     const paths = this.retrievePathsFromSource(source);
     const tfiles = paths
       .map((path) => this.app.vault.getFileByPath(path))
@@ -41,7 +60,7 @@ export class Operator {
     return tfiles;
   }
 
-  async updateDataviewPublisherOutput(tfile: TFile) {
+  private async updateDataviewPublisherOutput(tfile: TFile) {
     const content = await this.app.vault.read(tfile);
     const replacer = await createReplacerFromContent(content);
 
