@@ -33,7 +33,7 @@ This plugin uses the following two plugins, so you must install them:
 
 ## Usage
 
-```
+````
 %% DATAVIEW_PUBLISHER: start
 ```dataview
 <Your favorite Dataview query>
@@ -41,14 +41,14 @@ This plugin uses the following two plugins, so you must install them:
 %%
 <Query results will be output as markdown here>
 %% DATAVIEW_PUBLISHER: end %%
-```
+````
 
 ### Example
 
 Display a list of files tagged with `#articles`
 There are two notes tagged with `#articles` in the Vault (Article1.md, Article2.md).
 
-```
+````
 %% DATAVIEW_PUBLISHER: start
 ```dataview
 LIST FROM #articles SORT file.name
@@ -57,7 +57,7 @@ LIST FROM #articles SORT file.name
 - [[Article1.md|Article1]]
 - [[Article2.md|Article2]]
 %% DATAVIEW_PUBLISHER: end %%
-```
+````
 
 ### Settings
 
