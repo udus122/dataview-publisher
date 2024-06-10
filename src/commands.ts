@@ -3,22 +3,24 @@ import { Settings } from "./settings";
 // import { serializeDataview } from "./operations";
 
 import type { UnsafeApp } from "./types";
+import { Operator } from "./operations";
 
 export function createCommands(app: UnsafeApp, settings: Settings): Command[] {
   return [
     {
-      id: "update-dataview-embed",
-      name: "Update dataview embed",
+      id: "update-dataview-blocks",
+      name: "Update dataview blocks",
       callback: () => {
-        // serializeDataview(settings.source);
+        const operator = new Operator(app);
+        operator.updateFromSource(settings.source);
       },
     },
     {
-      id: "update-dataview-embed-and-publish",
-      name: "Update dataview embed and publish",
+      id: "update-dataview-blocks-and-publish",
+      name: "Update dataview blocks and publish",
       callback: () => {
-        // serializeDataview(settings.source);
-
+        const operator = new Operator(app);
+        operator.updateFromSource(settings.source);
         // Open Obsidian Publish
         app.commands.executeCommandById("publish:view-changes");
       },

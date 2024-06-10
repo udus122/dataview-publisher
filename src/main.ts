@@ -1,11 +1,10 @@
 import { Plugin } from "obsidian";
 
 import { DEFAULT_SETTINGS, SettingTab, Settings } from "./settings";
-
 import { createCommands } from "./commands";
+import { Operator } from "./operations";
 
 import type { UnsafeApp } from "./types";
-import { Operator } from "./operations";
 
 export default class Main extends Plugin {
   settings: Settings;
@@ -19,7 +18,10 @@ export default class Main extends Plugin {
       this.addCommand(command);
     });
 
-    this.addRibbonIcon("send", "Serialize dataview", (evt: MouseEvent) => {});
+    this.addRibbonIcon("send", "Serialize dataview", () => {
+      const operator = new Operator(app);
+      operator.updateFromSource(this.settings.source);
+    });
 
     // Source for save setting
     // https://github.com/hipstersmoothie/obsidian-plugin-prettier/blob/main/src/main.ts
@@ -33,16 +35,7 @@ export default class Main extends Plugin {
       saveCommandDefinition.callback = () => {
         if (this.settings.serializeOnSave) {
           const operator = new Operator(app);
-
-          const currentFile = operator.getActiveFile();
-
-          const targetTfiles = operator.retrieveTfilesFromSource(
-            `"${currentFile.path}"`
-          );
-
-          targetTfiles.forEach(async (tfile) => {
-            await operator.updateDataviewPublisherOutput(tfile);
-          });
+          operator.updateActiveFile();
         }
       };
     }
