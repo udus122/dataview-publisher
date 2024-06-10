@@ -1,7 +1,7 @@
 {
   "id": "dataview-publisher",
   "name": "Dataview Publisher",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "minAppVersion": "1.6.3",
   "description": "Output markdown from your Dataview queries and keep them up to date. You can also be able to publish them.",
   "author": "UD",
