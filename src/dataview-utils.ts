@@ -10,11 +10,3 @@ export function getDataviewAPI(app?: UnsafeApp | undefined): DataviewApi {
 
   return api;
 }
-
-export async function executeQueryMarkdown(
-  query: string,
-  app?: UnsafeApp | undefined
-): Promise<string> {
-  const dv = getDataviewAPI(app);
-  return await dv.tryQueryMarkdown(query);
-}
