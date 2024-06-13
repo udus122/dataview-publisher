@@ -7,7 +7,7 @@ import { Operator } from "./operations";
 export function createCommands(app: UnsafeApp, settings: Settings): Command[] {
   return [
     {
-      id: "dataview-publisher-insert-block",
+      id: "insert-block",
       name: "Insert dataview publish block",
       editorCallback: (editor) => {
         const { line, ch } = editor.getCursor();
@@ -33,7 +33,7 @@ export function createCommands(app: UnsafeApp, settings: Settings): Command[] {
       },
     },
     {
-      id: "dataview-publisher-update-blocks",
+      id: "update-blocks",
       name: "Update dataview publish blocks",
       callback: () => {
         const operator = new Operator(app);
@@ -41,7 +41,7 @@ export function createCommands(app: UnsafeApp, settings: Settings): Command[] {
       },
     },
     {
-      id: "dataview-publisher-update-blocks-and-publish",
+      id: "update-blocks-and-publish",
       name: "Update dataview publish blocks and open publish panel",
       callback: () => {
         const operator = new Operator(app);
