@@ -29,9 +29,11 @@ export default class Main extends Plugin {
       saveCommandDefinition.callback = () => {
         this.originalSaveCallback();
 
-        if (this.settings.updateOnSave) {
+        const editor = this.app.workspace.activeEditor?.editor;
+
+        if (this.settings.updateOnSave && editor) {
           const operator = new Operator(this.app as UnsafeApp);
-          operator.updateActiveFile();
+          operator.updateActiveFile(editor);
         }
       };
     }

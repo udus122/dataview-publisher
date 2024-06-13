@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, type TFile } from "obsidian";
+import { type Editor, type TFile } from "obsidian";
 import { Replacer, UnsafeApp } from "./types";
 import { createReplacerFromContent } from "./dataview-publisher";
 import { DataviewApi } from "obsidian-dataview";
@@ -13,8 +13,7 @@ export class Operator {
     this.dv = getDataviewAPI(app);
   }
 
-  async updateActiveFile() {
-    const editor = this.getEditor();
+  async updateActiveFile(editor: Editor) {
     const cursor = editor.getCursor();
     const content = editor.getValue();
 
@@ -23,14 +22,6 @@ export class Operator {
 
     editor.setValue(updatedContent);
     editor.setCursor(cursor);
-  }
-
-  private getEditor(): Editor {
-    const activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
-    if (!activeLeaf) {
-      throw new Error("No active leaf found");
-    }
-    return activeLeaf.editor;
   }
 
   updateFromSource(source: string) {
