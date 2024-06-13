@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/udus122/dataview-publisher/compare/0.2.2...0.2.3) - 2024-06-13
+- Update README.md by @udus122 in https://github.com/udus122/dataview-publisher/pull/17
+- Fix "The second sentence is grammatically wrong." by @udus122 in https://github.com/udus122/dataview-publisher/pull/19
+- Fix "To get the active editor ..." by @udus122 in https://github.com/udus122/dataview-publisher/pull/20
+- Fix "This should also be shown to the user, not everyone knows of the dev console." by @udus122 in https://github.com/udus122/dataview-publisher/pull/21
+- Fix "Don't prefix the command id with the plugin id ..." by @udus122 in https://github.com/udus122/dataview-publisher/pull/22
+
 ## [0.2.2](https://github.com/udus122/dataview-publisher/compare/0.2.1...0.2.2) - 2024-06-10
 - Fixed the problem that the cursor position is at the top by @udus122 in https://github.com/udus122/dataview-publisher/pull/15
 
