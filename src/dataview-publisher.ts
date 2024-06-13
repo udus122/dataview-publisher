@@ -1,5 +1,5 @@
-import { executeQueryMarkdown } from "./dataview-utils";
-import { BlockInfo, Replacer } from "./types";
+import type { DataviewApi } from "obsidian-dataview";
+import type { BlockInfo, Replacer } from "./types";
 
 const START_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISHER:\s*start\s*[\s\S]*?%%\s*/;
 const END_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISHER:\s*end\s*%%\s*/;
@@ -11,10 +11,11 @@ const BLOCK_REGEX = new RegExp(
 );
 
 export async function createReplacerFromContent(
-  content: string
+  content: string,
+  dv: DataviewApi
 ): Promise<Array<Replacer>> {
   const blocks = extractBlocks(content);
-  const updatedBlocks = await updateBlocks(blocks);
+  const updatedBlocks = await updateBlocks(blocks, dv);
   const replacer = createReplacer(blocks, updatedBlocks);
   return replacer;
 }
@@ -29,16 +30,19 @@ export function createReplacer(
   }));
 }
 
-export async function updateBlocks(blocks: Array<BlockInfo>) {
+export async function updateBlocks(blocks: Array<BlockInfo>, dv: DataviewApi) {
   return await Promise.all(
     blocks.map((block) => {
-      return updateBlock(block);
+      return updateBlock(block, dv);
     })
   );
 }
 
-export async function updateBlock(block: BlockInfo): Promise<BlockInfo> {
-  const executionResult = await executeBlock(block);
+export async function updateBlock(
+  block: BlockInfo,
+  dv: DataviewApi
+): Promise<BlockInfo> {
+  const executionResult = await executeBlock(block, dv);
 
   return {
     ...block,
@@ -49,14 +53,17 @@ export async function updateBlock(block: BlockInfo): Promise<BlockInfo> {
   };
 }
 
-export async function executeBlock(block: BlockInfo): Promise<string> {
+export async function executeBlock(
+  block: BlockInfo,
+  dv: DataviewApi
+): Promise<string> {
   // TODO: block.languageに応じて、DQLとJSのコード両方を実行できるようにする
   if (["dataviewjs", "javascript", "js"].includes(block.language ?? "")) {
     throw new Error("Dataviewjs is not supported yet.");
     // return await executeJavaScriptBlock(block);
   }
   // languageが指定されていない場合は、DQLとして実行する
-  const result = await executeQueryMarkdown(block.query);
+  const result = await dv.tryQueryMarkdown(block.query);
 
   return result.trim();
 }

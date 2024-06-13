@@ -1,4 +1,4 @@
-import { type Editor, type TFile } from "obsidian";
+import { Notice, type Editor, type TFile } from "obsidian";
 import { Replacer, UnsafeApp } from "./types";
 import { createReplacerFromContent } from "./dataview-publisher";
 import { DataviewApi } from "obsidian-dataview";
@@ -10,14 +10,18 @@ export class Operator {
 
   constructor(app: UnsafeApp) {
     this.app = app;
-    this.dv = getDataviewAPI(app);
+    try {
+      this.dv = getDataviewAPI(app);
+    } catch (e) {
+      new Notice(e.message);
+    }
   }
 
   async updateActiveFile(editor: Editor) {
     const cursor = editor.getCursor();
     const content = editor.getValue();
 
-    const replacer = await createReplacerFromContent(content);
+    const replacer = await createReplacerFromContent(content, this.dv);
     const updatedContent = this.updateContnet(content, replacer);
 
     editor.setValue(updatedContent);
@@ -52,7 +56,7 @@ export class Operator {
   private async updateDataviewPublisherOutput(tfile: TFile) {
     const content = await this.app.vault.cachedRead(tfile);
 
-    const replacer = await createReplacerFromContent(content);
+    const replacer = await createReplacerFromContent(content, this.dv);
     const updatedContent = this.updateContnet(content, replacer);
 
     this.app.vault.process(tfile, () => updatedContent);
