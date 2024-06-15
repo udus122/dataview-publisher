@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.0](https://github.com/udus122/dataview-publisher/compare/0.2.3...0.3.0) - 2024-06-15
+- feat: eval javascript query by @udus122 in https://github.com/udus122/dataview-publisher/pull/23
+
 ## [0.2.3](https://github.com/udus122/dataview-publisher/compare/0.2.2...0.2.3) - 2024-06-13
 - Update README.md by @udus122 in https://github.com/udus122/dataview-publisher/pull/17
 - Fix "The second sentence is grammatically wrong." by @udus122 in https://github.com/udus122/dataview-publisher/pull/19
