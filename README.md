@@ -45,7 +45,9 @@ This plugin uses the following two plugins, so you must install them:
 
 Tips: To suppress the original rendering, omit "dataview" of info string.
 
-### Example
+### Examples
+
+#### Dataview Query Language (DQL) query
 
 Display a list of files tagged with `#articles`
 There are two notes tagged with `#articles` in the Vault (Article1.md, Article2.md).
@@ -60,6 +62,39 @@ LIST FROM #articles SORT file.name
 - [[Article2.md|Article2]]
 %% DATAVIEW_PUBLISHER: end %%
 ````
+
+For detailed instructions on how to write DQL, please refer to the [Dataview documentation](https://blacksmithgu.github.io/obsidian-dataview/queries/structure).
+
+#### Dataview JS (Experimental)
+
+Dataview can also output the results of executing arbitrary JavaScript code by setting the code block language (info string) to `javascript`, `js`, or `dataviewjs`.
+
+This allows you to output Markdown strings in the desired format by using [Dataview's Markdown functions](https://blacksmithgu.github.io/obsidian-dataview/api/code-reference/#markdown-dataviews).
+
+````
+%% DATAVIEW_PUBLISHER: start
+```dataviewjs
+const articles = dv.pages("#articles").map(article => `[[${article.file.name}]]`);
+`
+## Articles
+
+${dv.markdownList(articles)}
+`;
+```
+%%
+## Articles
+
+- [[Article1]]
+- [[Article2]]
+%% DATAVIEW_PUBLISHER: end %%
+````
+
+Dataview JS is executed using the [eval() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval). the last expression or value evaluated is output (Leading and trailing whitespace and newlines will be trimmed).
+
+It doesn't render HTML, so it won't be output even if you use the [Dataview's Render functions](https://blacksmithgu.github.io/obsidian-dataview/api/code-reference/#render).
+Please output a Markdown string as the last expression or value.
+
+**Warning: It can be dangerous to execute arbitrary codes from untrusted sources. Only run codes that you understand, from trusted sources.**
 
 ### Settings
 
