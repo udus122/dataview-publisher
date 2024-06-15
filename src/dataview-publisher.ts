@@ -57,10 +57,9 @@ export async function executeBlock(
   block: BlockInfo,
   dv: DataviewApi
 ): Promise<string> {
-  // TODO: block.languageに応じて、DQLとJSのコード両方を実行できるようにする
   if (["dataviewjs", "javascript", "js"].includes(block.language ?? "")) {
-    throw new Error("Dataviewjs is not supported yet.");
-    // return await executeJavaScriptBlock(block);
+    const evalResult = eval(block.query);
+    return evalResult.trim();
   }
   // languageが指定されていない場合は、DQLとして実行する
   const result = await dv.tryQueryMarkdown(block.query);
