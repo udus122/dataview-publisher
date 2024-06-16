@@ -6,7 +6,7 @@ const START_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISHER:\s*start\s*[\s\S]*?%%\s*/;
 const END_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISHER:\s*end\s*%%\s*/;
 const BLOCK_REGEX = new RegExp(
   START_BLOCK_REGEX.source +
-    /(?<serialized>[\s\S]*?)/.source +
+    /(?<output>[\s\S]*?)/.source +
     END_BLOCK_REGEX.source,
   "gm"
 );
@@ -55,7 +55,7 @@ export async function updateBlock(
     ...block,
     content: composeBlockContent({
       ...block,
-      serialized: executionResult,
+      output: executionResult,
     }),
   };
 }
@@ -91,14 +91,14 @@ export function parseBlock(block: string): BlockInfo {
   const startBlock = extractStartBlock(block);
   const { language, query } = extractMarkdownCodeBlock(startBlock);
 
-  const serialized = extractSerialized(block);
+  const output = extractoutput(block);
 
   return {
     content: block,
     startBlock,
     language,
     query,
-    serialized,
+    output,
     endBlock: extractEndBlock(block),
   };
 }
@@ -141,7 +141,7 @@ export function extractMarkdownCodeBlock(text: string) {
   return { language, query };
 }
 
-export function extractSerialized(text: string) {
+export function extractoutput(text: string) {
   // NOTE: initialize regex to reset lastIndex
   const regex = new RegExp(BLOCK_REGEX.source);
 
@@ -152,10 +152,10 @@ export function extractSerialized(text: string) {
     throw new Error("replaced text is not found");
   }
   // マッチが見つかった場合は、トリミングして返す
-  return match.groups.serialized.trim();
+  return match.groups.output.trim();
 }
 
 export function composeBlockContent(blocks: BlockInfo): string {
-  const { startBlock, serialized, endBlock } = blocks;
-  return startBlock + "\n\n" + serialized + "\n\n" + endBlock;
+  const { startBlock, output, endBlock } = blocks;
+  return startBlock + "\n\n" + output + "\n\n" + endBlock;
 }

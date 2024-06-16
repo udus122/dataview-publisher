@@ -13,7 +13,7 @@ export type BlockInfo = {
   language: string;
   query: string;
   startBlock: string;
-  serialized: string;
+  output: string;
   endBlock: string;
 };
 

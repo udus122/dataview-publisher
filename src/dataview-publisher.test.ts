@@ -54,7 +54,7 @@ FROM #🏷️/dataview-publish
 %%`,
       query: "LIST\nFROM #🏷️/dataview-publish",
       language: "dataview",
-      serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
+      output: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
       endBlock: "%% DATAVIEW_PUBLISHER: end %%",
     });
   });
@@ -97,7 +97,7 @@ DATAVIEWの結果をシリアライズした結果であり、置換対象
 %% DATAVIEW_PUBLISHER: end %%`,
         language: "dataview",
         query: "LIST\nFROM #🏷️/dataview-publish",
-        serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
+        output: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
         startBlock: `%% DATAVIEW_PUBLISHER: start
 \`\`\`dataview
 LIST
@@ -117,7 +117,7 @@ DATAVIEWの結果をシリアライズした結果であり、置換対象
 %% DATAVIEW_PUBLISHER: end %%`,
         language: "dataview",
         query: "LIST\nFROM #🏷️/index",
-        serialized: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
+        output: `DATAVIEWの結果をシリアライズした結果であり、置換対象`,
         startBlock: `%% DATAVIEW_PUBLISHER: start
 \`\`\`dataview
 LIST
@@ -136,7 +136,7 @@ FROM #🏷️/index
         "%% DATAVIEW_PUBLISHER: start\n```dataview\nLIST\nFROM #🏷️/dataview-publish\n```\n%%",
       query: "LIST\nFROM #🏷️/dataview-publish",
       language: "dataview",
-      serialized: "DATAVIEWの結果をシリアライズした結果であり、置換対象",
+      output: "DATAVIEWの結果をシリアライズした結果であり、置換対象",
       endBlock: "%% DATAVIEW_PUBLISHER: end %%",
     };
 
