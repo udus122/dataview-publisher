@@ -17,11 +17,21 @@ export class Operator {
     }
   }
 
+  private getActiveTFile(): TFile {
+    const activeFile = this.app.workspace.getActiveFile();
+    if (!activeFile) {
+      throw new Error("No active file");
+    }
+    return activeFile;
+  }
+
   async updateActiveFile(editor: Editor) {
     const cursor = editor.getCursor();
     const content = editor.getValue();
 
-    const replacer = await createReplacerFromContent(content, this.dv);
+    const tfile = this.getActiveTFile();
+
+    const replacer = await createReplacerFromContent(content, this.dv, tfile);
     const updatedContent = this.updateContnet(content, replacer);
 
     editor.setValue(updatedContent);
@@ -56,7 +66,7 @@ export class Operator {
   private async updateDataviewPublisherOutput(tfile: TFile) {
     const content = await this.app.vault.cachedRead(tfile);
 
-    const replacer = await createReplacerFromContent(content, this.dv);
+    const replacer = await createReplacerFromContent(content, this.dv, tfile);
     const updatedContent = this.updateContnet(content, replacer);
 
     this.app.vault.process(tfile, () => updatedContent);

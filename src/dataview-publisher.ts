@@ -1,3 +1,4 @@
+import type { TFile } from "obsidian";
 import type { DataviewApi } from "obsidian-dataview";
 import type { BlockInfo, Replacer } from "./types";
 
@@ -12,10 +13,11 @@ const BLOCK_REGEX = new RegExp(
 
 export async function createReplacerFromContent(
   content: string,
-  dv: DataviewApi
+  dv: DataviewApi,
+  tfile?: TFile
 ): Promise<Array<Replacer>> {
   const blocks = extractBlocks(content);
-  const updatedBlocks = await updateBlocks(blocks, dv);
+  const updatedBlocks = await updateBlocks(blocks, dv, tfile);
   const replacer = createReplacer(blocks, updatedBlocks);
   return replacer;
 }
@@ -30,19 +32,24 @@ export function createReplacer(
   }));
 }
 
-export async function updateBlocks(blocks: Array<BlockInfo>, dv: DataviewApi) {
+export async function updateBlocks(
+  blocks: Array<BlockInfo>,
+  dv: DataviewApi,
+  tfile?: TFile
+) {
   return await Promise.all(
     blocks.map((block) => {
-      return updateBlock(block, dv);
+      return updateBlock(block, dv, tfile);
     })
   );
 }
 
 export async function updateBlock(
   block: BlockInfo,
-  dv: DataviewApi
+  dv: DataviewApi,
+  tfile?: TFile
 ): Promise<BlockInfo> {
-  const executionResult = await executeBlock(block, dv);
+  const executionResult = await executeBlock(block, dv, tfile);
 
   return {
     ...block,
@@ -55,14 +62,15 @@ export async function updateBlock(
 
 export async function executeBlock(
   block: BlockInfo,
-  dv: DataviewApi
+  dv: DataviewApi,
+  tfile?: TFile
 ): Promise<string> {
   if (["dataviewjs", "javascript", "js"].includes(block.language ?? "")) {
     const evalResult = eval(block.query);
     return evalResult.trim();
   }
   // languageが指定されていない場合は、DQLとして実行する
-  const result = await dv.tryQueryMarkdown(block.query);
+  const result = await dv.tryQueryMarkdown(block.query, tfile?.path);
 
   return result.trim();
 }
