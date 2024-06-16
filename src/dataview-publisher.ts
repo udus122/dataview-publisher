@@ -157,5 +157,5 @@ export function extractSerialized(text: string) {
 
 export function composeBlockContent(blocks: BlockInfo): string {
   const { startBlock, serialized, endBlock } = blocks;
-  return startBlock + "\n" + serialized + "\n\n" + endBlock;
+  return startBlock + "\n\n" + serialized + "\n\n" + endBlock;
 }

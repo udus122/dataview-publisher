@@ -148,6 +148,7 @@ LIST
 FROM #🏷️/dataview-publish
 \`\`\`
 %%
+
 DATAVIEWの結果をシリアライズした結果であり、置換対象
 
 %% DATAVIEW_PUBLISHER: end %%`;
