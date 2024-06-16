@@ -71,6 +71,10 @@ Dataview can also output the results of executing arbitrary JavaScript code by s
 
 This allows you to output Markdown strings in the desired format by using [Dataview's Markdown functions](https://blacksmithgu.github.io/obsidian-dataview/api/code-reference/#markdown-dataviews).
 
+- [dv.markdownTable(headers, values)](https://blacksmithgu.github.io/obsidian-dataview/api/code-reference/#dvmarkdowntableheaders-values)
+- [dv.markdownList(values)](https://blacksmithgu.github.io/obsidian-dataview/api/code-reference/#dvmarkdownlistvalues)
+- [dv.markdownTaskList(tasks)](https://blacksmithgu.github.io/obsidian-dataview/api/code-reference/#dvmarkdowntasklisttasks)
+
 ````
 %% DATAVIEW_PUBLISHER: start
 ```dataviewjs
