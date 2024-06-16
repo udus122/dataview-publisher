@@ -10,7 +10,7 @@ Necessitatibus quisquam veritatis eos dolor hic totam sapiente necessitatibus es
 %% DATAVIEW_PUBLISHER: start
 \`\`\`dataview
 LIST
-FROM #🏷️/dataview-publish 
+FROM #🏷️/dataview-publish
 \`\`\`
 %%
 DATAVIEWの結果をシリアライズした結果であり、置換対象
