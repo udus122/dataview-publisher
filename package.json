@@ -1,6 +1,6 @@
 {
   "name": "dataview-publisher",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Output markdown from your Dataview queries and keep them up to date. You can also publish them.",
   "main": "main.js",
   "scripts": {
