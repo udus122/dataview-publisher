@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.2](https://github.com/udus122/dataview-publisher/compare/0.3.1...0.3.2) - 2024-06-16
+- Fix/output-newline by @udus122 in https://github.com/udus122/dataview-publisher/pull/29
+
 ## [0.3.1](https://github.com/udus122/dataview-publisher/compare/0.3.0...0.3.1) - 2024-06-16
 - update README by @udus122 in https://github.com/udus122/dataview-publisher/pull/25
 - Update screenshots by @udus122 in https://github.com/udus122/dataview-publisher/pull/27
