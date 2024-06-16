@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.4](https://github.com/udus122/dataview-publisher/compare/0.3.3...0.3.4) - 2024-06-16
+- Fix add-leading-newline by @udus122 in https://github.com/udus122/dataview-publisher/pull/33
+
 ## [0.3.3](https://github.com/udus122/dataview-publisher/compare/0.3.2...0.3.3) - 2024-06-16
 - Fixing test errors by @udus122 in https://github.com/udus122/dataview-publisher/pull/31
 
