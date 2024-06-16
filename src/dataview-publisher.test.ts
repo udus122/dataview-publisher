@@ -66,7 +66,7 @@ FROM #🏷️/dataview-publish
       `%% DATAVIEW_PUBLISHER: start
 \`\`\`dataview
 LIST
-FROM #🏷️/dataview-publish 
+FROM #🏷️/dataview-publish
 \`\`\`
 %%
 DATAVIEWの結果をシリアライズした結果であり、置換対象
@@ -90,7 +90,7 @@ DATAVIEWの結果をシリアライズした結果であり、置換対象
         content: `%% DATAVIEW_PUBLISHER: start
 \`\`\`dataview
 LIST
-FROM #🏷️/dataview-publish 
+FROM #🏷️/dataview-publish
 \`\`\`
 %%
 DATAVIEWの結果をシリアライズした結果であり、置換対象
@@ -101,7 +101,7 @@ DATAVIEWの結果をシリアライズした結果であり、置換対象
         startBlock: `%% DATAVIEW_PUBLISHER: start
 \`\`\`dataview
 LIST
-FROM #🏷️/dataview-publish 
+FROM #🏷️/dataview-publish
 \`\`\`
 %%`,
         endBlock: "%% DATAVIEW_PUBLISHER: end %%",
@@ -131,9 +131,9 @@ FROM #🏷️/index
   it("should return the composed block", () => {
     const blocks = {
       content:
-        "%% DATAVIEW_PUBLISHER: start\n```dataview\nLIST\nFROM #🏷️/dataview-publish \n```\n%%\nDATAVIEWの結果をシリアライズした結果であり、置換対象\n%% DATAVIEW_PUBLISHER: end %%",
+        "%% DATAVIEW_PUBLISHER: start\n```dataview\nLIST\nFROM #🏷️/dataview-publish\n```\n%%\nDATAVIEWの結果をシリアライズした結果であり、置換対象\n%% DATAVIEW_PUBLISHER: end %%",
       startBlock:
-        "%% DATAVIEW_PUBLISHER: start\n```dataview\nLIST\nFROM #🏷️/dataview-publish \n```\n%%",
+        "%% DATAVIEW_PUBLISHER: start\n```dataview\nLIST\nFROM #🏷️/dataview-publish\n```\n%%",
       query: "LIST\nFROM #🏷️/dataview-publish",
       language: "dataview",
       serialized: "DATAVIEWの結果をシリアライズした結果であり、置換対象",
@@ -145,10 +145,11 @@ FROM #🏷️/index
     const expectedBlock = `%% DATAVIEW_PUBLISHER: start
 \`\`\`dataview
 LIST
-FROM #🏷️/dataview-publish 
+FROM #🏷️/dataview-publish
 \`\`\`
 %%
 DATAVIEWの結果をシリアライズした結果であり、置換対象
+
 %% DATAVIEW_PUBLISHER: end %%`;
 
     expect(composedBlock).toEqual(expectedBlock);
