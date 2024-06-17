@@ -32,6 +32,12 @@ export class Operator {
     const tfile = this.getActiveTFile();
 
     const replacer = await createReplacerFromContent(content, this.dv, tfile);
+
+    // If there is no replacer, do nothing
+    if (replacer.length === 0) {
+      return;
+    }
+
     const updatedContent = this.updateContnet(content, replacer);
 
     editor.setValue(updatedContent);
