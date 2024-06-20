@@ -36,16 +36,26 @@ export function createCommands(app: UnsafeApp, settings: Settings): Command[] {
       id: "update-blocks",
       name: "Update dataview publish blocks",
       callback: () => {
-        const operator = new Operator(app);
-        operator.updateFromSource(settings.source);
+        try {
+          const operator = new Operator(app);
+          operator.updateFromSource(settings.source);
+        } catch (err) {
+          new Notice(err.message);
+          throw err;
+        }
       },
     },
     {
       id: "update-blocks-and-publish",
       name: "Update dataview publish blocks and open publish panel",
       callback: () => {
-        const operator = new Operator(app);
-        operator.updateFromSource(settings.source);
+        try {
+          const operator = new Operator(app);
+          operator.updateFromSource(settings.source);
+        } catch (err) {
+          new Notice(err.message);
+          throw err;
+        }
         // Open Obsidian Publish
         app.commands.executeCommandById("publish:view-changes");
       },

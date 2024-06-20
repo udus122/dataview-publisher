@@ -10,11 +10,7 @@ export class Operator {
 
   constructor(app: UnsafeApp) {
     this.app = app;
-    try {
-      this.dv = getDataviewAPI(app);
-    } catch (e) {
-      new Notice(e.message);
-    }
+    this.dv = getDataviewAPI(app);
   }
 
   private getActiveTFile(): TFile {

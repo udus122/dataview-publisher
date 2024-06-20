@@ -1,4 +1,4 @@
-import { Plugin } from "obsidian";
+import { Notice, Plugin } from "obsidian";
 
 import { DEFAULT_SETTINGS, SettingTab, Settings } from "./settings";
 import { createCommands } from "./commands";
@@ -32,8 +32,13 @@ export default class Main extends Plugin {
         const editor = this.app.workspace.activeEditor?.editor;
 
         if (this.settings.updateOnSave && editor) {
-          const operator = new Operator(this.app as UnsafeApp);
-          operator.updateActiveFile(editor);
+          try {
+            const operator = new Operator(this.app as UnsafeApp);
+            operator.updateActiveFile(editor);
+          } catch (err) {
+            new Notice(err.message);
+            throw err;
+          }
         }
       };
     }
