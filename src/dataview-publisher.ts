@@ -1,6 +1,7 @@
 import type { TFile } from "obsidian";
 import type { DataviewApi } from "obsidian-dataview";
 import type { BlockInfo, Replacer } from "./types";
+import { EndBlockNotFoundError, StartBlockNotFoundError } from "./errors";
 
 const START_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISHER:\s*start\s*[\s\S]*?%%\s*/;
 const END_BLOCK_REGEX = /\s*%%\s*DATAVIEW_PUBLISHER:\s*end\s*%%\s*/;
@@ -109,7 +110,7 @@ export function extractStartBlock(text: string) {
   const match = text.match(regex);
 
   if (!match) {
-    throw new Error("start block is not found");
+    throw new StartBlockNotFoundError("start block is not found");
   }
 
   return match[0].trim();
@@ -121,7 +122,7 @@ export function extractEndBlock(text: string) {
   const match = text.match(regex);
 
   if (!match) {
-    throw new Error("end block is not found");
+    throw new EndBlockNotFoundError("end block is not found");
   }
   return match[0].trim();
 }
