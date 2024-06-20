@@ -1,4 +1,4 @@
-import { Notice, type Editor, type TFile } from "obsidian";
+import type { Editor, TFile } from "obsidian";
 import { Replacer, UnsafeApp } from "./types";
 import { createReplacerFromContent } from "./dataview-publisher";
 import { DataviewApi } from "obsidian-dataview";
