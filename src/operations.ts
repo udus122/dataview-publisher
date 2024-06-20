@@ -1,4 +1,4 @@
-import { Notice, type Editor, type TFile } from "obsidian";
+import type { Editor, TFile } from "obsidian";
 import { Replacer, UnsafeApp } from "./types";
 import { createReplacerFromContent } from "./dataview-publisher";
 import { DataviewApi } from "obsidian-dataview";
@@ -10,11 +10,7 @@ export class Operator {
 
   constructor(app: UnsafeApp) {
     this.app = app;
-    try {
-      this.dv = getDataviewAPI(app);
-    } catch (e) {
-      new Notice(e.message);
-    }
+    this.dv = getDataviewAPI(app);
   }
 
   private getActiveTFile(): TFile {
