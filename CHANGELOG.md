@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.6](https://github.com/udus122/dataview-publisher/compare/0.3.5...0.3.6) - 2024-06-20
+- Feature/notice-error by @udus122 in https://github.com/udus122/dataview-publisher/pull/37
+
 ## [0.3.5](https://github.com/udus122/dataview-publisher/compare/0.3.4...0.3.5) - 2024-06-17
 - not update file if replacer is empty by @udus122 in https://github.com/udus122/dataview-publisher/pull/35
 
