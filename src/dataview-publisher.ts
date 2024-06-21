@@ -66,7 +66,9 @@ export async function executeBlock(
   dv: DataviewApi,
   tfile?: TFile
 ): Promise<string> {
-  if (["dataviewjs", "javascript", "js"].includes(block.language ?? "")) {
+  if (
+    ["dataviewjs", "javascript", "js"].some((x) => block.language.startsWith(x))
+  ) {
     const evalResult = eval(block.query);
     return evalResult.trim();
   }
@@ -128,7 +130,7 @@ export function extractEndBlock(text: string) {
 }
 
 export function extractMarkdownCodeBlock(text: string) {
-  const CODEBLOCK_REGEX = /```(?<language>\S+)?\n(?<query>[\s\S]*?)```/m;
+  const CODEBLOCK_REGEX = /```(?<language>.+)?\n(?<query>[\s\S]*?)```/m;
 
   const match = text.match(CODEBLOCK_REGEX);
 

@@ -1,6 +1,7 @@
 import {
   composeBlockContent,
   extractBlock,
+  extractMarkdownCodeBlock,
   parseBlock,
 } from "./dataview-publisher";
 
@@ -154,5 +155,72 @@ DATAVIEWの結果をシリアライズした結果であり、置換対象
 %% DATAVIEW_PUBLISHER: end %%`;
 
     expect(composedBlock).toEqual(expectedBlock);
+  });
+});
+describe("extractMarkdownCodeBlock", () => {
+  it("should extract language and query from a valid code block", () => {
+    const text = "```typescript\nconst x = 10;\n```";
+    const result = extractMarkdownCodeBlock(text);
+    expect(result).toEqual({
+      language: "typescript",
+      query: "const x = 10;",
+    });
+  });
+
+  it("should extract language and query from a valid code block", () => {
+    const text = `%% DATAVIEW_PUBLISHER: start
+#dataview-publisher
+\`\`\`dataviewjs
+// メタ情報の表示
+\`ノート数: \${dv.pages('"Notes" or "Journals" or "Literatures"').length}\`
+\`\`\`
+%%`;
+    const result = extractMarkdownCodeBlock(text);
+    expect(result).toEqual({
+      language: "dataviewjs",
+      query: `// メタ情報の表示
+\`ノート数: \${dv.pages('"Notes" or "Journals" or "Literatures"').length}\``,
+    });
+  });
+
+  it("should extract language and query from a valid code block", () => {
+    const text = `%% DATAVIEW_PUBLISHER: start
+#dataview-publisher
+\`\`\`dataviewjs fold 
+// メタ情報の表示
+\`ノート数: \${dv.pages('"Notes" or "Journals" or "Literatures"').length}\`
+\`\`\`
+%%`;
+    const result = extractMarkdownCodeBlock(text);
+    expect(result).toEqual({
+      language: "dataviewjs fold",
+      query: `// メタ情報の表示
+\`ノート数: \${dv.pages('"Notes" or "Journals" or "Literatures"').length}\``,
+    });
+  });
+
+  it("should extract an empty language and query from a code block without language", () => {
+    const text = "```\nconst x = 10;\n```";
+    const result = extractMarkdownCodeBlock(text);
+    expect(result).toEqual({
+      language: "",
+      query: "const x = 10;",
+    });
+  });
+
+  it("should extract an empty language and query from an empty code block", () => {
+    const text = "```\n```";
+    const result = extractMarkdownCodeBlock(text);
+    expect(result).toEqual({
+      language: "",
+      query: "",
+    });
+  });
+
+  it("should throw an error if the code block is not found", () => {
+    const text = "const x = 10;";
+    expect(() => extractMarkdownCodeBlock(text)).toThrowError(
+      "query block is not found"
+    );
   });
 });
