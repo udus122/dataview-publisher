@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.7](https://github.com/udus122/dataview-publisher/compare/0.3.6...0.3.7) - 2024-06-21
+- fix: allow space by @udus122 in https://github.com/udus122/dataview-publisher/pull/39
+
 ## [0.3.6](https://github.com/udus122/dataview-publisher/compare/0.3.5...0.3.6) - 2024-06-20
 - Feature/notice-error by @udus122 in https://github.com/udus122/dataview-publisher/pull/37
 
