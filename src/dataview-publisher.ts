@@ -69,13 +69,29 @@ export async function executeBlock(
   if (
     ["dataviewjs", "javascript", "js"].some((x) => block.language.startsWith(x))
   ) {
-    const evalResult = eval(block.query);
+    const evalResult = await dv.tryEvaluate(
+      block.query,
+      undefined,
+      // @ts-ignore
+      tfile?.path
+    );
     return evalResult.trim();
   }
   // languageが指定されていない場合は、DQLとして実行する
-  const result = await dv.tryQueryMarkdown(block.query, tfile?.path);
+  const result = await executeQueryMarkdown(block.query, dv, tfile?.path);
 
   return result.trim();
+}
+
+export async function executeQueryMarkdown(
+  query: string,
+  dv: DataviewApi,
+  originFile?: string
+) {
+  const result = await dv.tryQueryMarkdown(query, originFile);
+  // ref. https://github.com/udus122/dataview-publisher/issues/41#issuecomment-2208610505
+  const snitizedResult = result.replaceAll("\\\\|", "\\|");
+  return snitizedResult;
 }
 
 export function extractBlock(content: string): Array<string> {
