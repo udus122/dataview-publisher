@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.8](https://github.com/udus122/dataview-publisher/compare/0.3.7...0.3.8) - 2024-07-04
+- Fix to propery output link in table by @udus122 in https://github.com/udus122/dataview-publisher/pull/42
+
 ## [0.3.7](https://github.com/udus122/dataview-publisher/compare/0.3.6...0.3.7) - 2024-06-21
 - fix: allow space by @udus122 in https://github.com/udus122/dataview-publisher/pull/39
 
