@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.9](https://github.com/udus122/dataview-publisher/compare/0.3.8...0.3.9) - 2024-07-06
+- fix: revert unintended change by @udus122 in https://github.com/udus122/dataview-publisher/pull/44
+
 ## [0.3.8](https://github.com/udus122/dataview-publisher/compare/0.3.7...0.3.8) - 2024-07-04
 - Fix to propery output link in table by @udus122 in https://github.com/udus122/dataview-publisher/pull/42
 
