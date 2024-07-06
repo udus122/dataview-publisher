@@ -69,12 +69,7 @@ export async function executeBlock(
   if (
     ["dataviewjs", "javascript", "js"].some((x) => block.language.startsWith(x))
   ) {
-    const evalResult = await dv.tryEvaluate(
-      block.query,
-      undefined,
-      // @ts-ignore
-      tfile?.path
-    );
+    const evalResult = eval(block.query);
     return evalResult.trim();
   }
   // languageが指定されていない場合は、DQLとして実行する
