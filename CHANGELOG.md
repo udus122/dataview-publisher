@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.10](https://github.com/udus122/dataview-publisher/compare/0.3.9...0.3.10) - 2024-11-16
+- Define file object to use execute javascript by @udus122 in https://github.com/udus122/dataview-publisher/pull/52
+- fix mistake by @udus122 in https://github.com/udus122/dataview-publisher/pull/53
+
 ## [0.3.9](https://github.com/udus122/dataview-publisher/compare/0.3.8...0.3.9) - 2024-07-06
 - fix: revert unintended change by @udus122 in https://github.com/udus122/dataview-publisher/pull/44
 
