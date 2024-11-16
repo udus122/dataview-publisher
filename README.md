@@ -90,6 +90,7 @@ ${dv.markdownList(articles)}
 
 - [[Article1]]
 - [[Article2]]
+
 %% DATAVIEW_PUBLISHER: end %%
 ````
 
@@ -97,6 +98,8 @@ Dataview JS is executed using the [eval() function](https://developer.mozilla.or
 
 It doesn't render HTML, so it won't be output even if you use the [Dataview's Render functions](https://blacksmithgu.github.io/obsidian-dataview/api/code-reference/#render).
 Please output a Markdown string as the last expression or value.
+
+You can use [`DataviewAPI`](https://github.com/blacksmithgu/obsidian-dataview/blob/6d9030ef1df9c3f310f42e3502149dc71792dc4d/src/api/plugin-api.ts#L77) object as `dv` and [`TFile`](https://docs.obsidian.md/Reference/TypeScript+API/TFile) object of current file as `file`.
 
 **Warning: It can be dangerous to execute arbitrary codes from untrusted sources. Only run codes that you understand, from trusted sources.**
 
