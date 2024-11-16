@@ -1,4 +1,4 @@
-# Davaview Publisher
+# Dataview Publisher
 
 ## Overview
 
@@ -123,7 +123,7 @@ Please output a Markdown string as the last expression or value.
 
 ## Inspirations
 
-This plugin highly inspirated by this article.
+This plugin highly inspired by this article.
 
 [Using Dataview on Obsidian Publish](https://joschua.io/posts/2023/09/01/obsidian-publish-dataview)
 

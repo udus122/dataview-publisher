@@ -34,7 +34,7 @@ export class Operator {
       return;
     }
 
-    const updatedContent = this.updateContnet(content, replacer);
+    const updatedContent = this.updateContent(content, replacer);
 
     editor.setValue(updatedContent);
     editor.setCursor(cursor);
@@ -68,13 +68,12 @@ export class Operator {
   private async updateDataviewPublisherOutput(tfile: TFile) {
     const content = await this.app.vault.cachedRead(tfile);
 
-    const replacer = await createReplacerFromContent(content, this.dv, tfile);
-    const updatedContent = this.updateContnet(content, replacer);
+    const updatedContent = this.updateContent(content, replacer);
 
     this.app.vault.process(tfile, () => updatedContent);
   }
 
-  private updateContnet(content: string, replacer: Replacer[]) {
+  private updateContent(content: string, replacer: Replacer[]) {
     return replacer.reduce(
       (
         c: string,
