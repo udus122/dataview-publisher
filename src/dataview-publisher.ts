@@ -69,21 +69,23 @@ export async function executeBlock(
   if (
     ["dataviewjs", "javascript", "js"].some((x) => block.language.startsWith(x))
   ) {
+    // Define to access the current file object as file within eval
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const file = tfile;
     const evalResult = eval(block.query);
     return evalResult.trim();
   }
   // languageが指定されていない場合は、DQLとして実行する
-  const result = await executeQueryMarkdown(block.query, dv, tfile?.path);
-
+  const result = await executeQueryMarkdown(block.query, dv, tfile);
   return result.trim();
 }
 
 export async function executeQueryMarkdown(
   query: string,
   dv: DataviewApi,
-  originFile?: string
+  originFile?: TFile
 ) {
-  const result = await dv.tryQueryMarkdown(query, originFile);
+  const result = await dv.tryQueryMarkdown(query, originFile?.path);
   // ref. https://github.com/udus122/dataview-publisher/issues/41#issuecomment-2208610505
   const snitizedResult = result.replaceAll("\\\\|", "\\|");
   return snitizedResult;
@@ -105,7 +107,7 @@ export function parseBlock(block: string): BlockInfo {
   const startBlock = extractStartBlock(block);
   const { language, query } = extractMarkdownCodeBlock(startBlock);
 
-  const output = extractoutput(block);
+  const output = extractOutput(block);
 
   return {
     content: block,
@@ -155,7 +157,7 @@ export function extractMarkdownCodeBlock(text: string) {
   return { language, query };
 }
 
-export function extractoutput(text: string) {
+export function extractOutput(text: string) {
   // NOTE: initialize regex to reset lastIndex
   const regex = new RegExp(BLOCK_REGEX.source);
 
