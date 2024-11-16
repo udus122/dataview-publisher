@@ -69,6 +69,9 @@ export async function executeBlock(
   if (
     ["dataviewjs", "javascript", "js"].some((x) => block.language.startsWith(x))
   ) {
+    // Define to access the current file object as file within eval
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const file = tfile;
     const evalResult = eval(block.query);
     return evalResult.trim();
   }
